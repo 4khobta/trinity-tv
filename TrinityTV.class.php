@@ -7,7 +7,7 @@ class TrinityTV
     private string $api_url = 'http://partners.trinity-tv.net/partners/user/';
     public array $errors = [];
 
-    public function __construct($partner_id, $salt)
+    public function __construct(int $partner_id, string $salt)
     {
         $this->partner_id = $partner_id;
         $this->salt = $salt;
@@ -32,15 +32,16 @@ class TrinityTV
         ], $params);
 
         $hash_params = $params;
+        unset($hash_params['note']);
 
         array_walk($hash_params, function (&$val, $key) {
             if (in_array($key, ['firstname', 'lastname', 'middlename', 'address']))
                 $val = urlencode($val);
         });
 
-        unset($hash_params['note']);
         $data = array_merge($params, ['hash' => md5(implode($hash_params) . $this->salt)]);
         $response = json_decode($this->client($url . '?' . http_build_query($data)), true);
+
         if ($response && isset($response['result'])) {
             if ($response['result'] == 'success')
                 return $response;
