@@ -23,7 +23,7 @@ class TrinityTV
         return $out;
     }
 
-    private function execute(string $method, array $params = [])
+    private function execute(string $method, array $params = []): array|null
     {
         $url = $this->api_url . $method;
         $params = array_merge([
@@ -51,6 +51,7 @@ class TrinityTV
         } else {
             $this->errors[] = 'Connection error';
         }
+        return null;
     }
 
     public function getUser(int $id): array|null
