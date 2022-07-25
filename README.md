@@ -1,7 +1,8 @@
 # TrinityTV API
-
+php >=8
 ```php
 require_once 'TrinityTV.class.php';
+
 //YOUR_PARTNER_ID,YOUR_SALT_CODE,TARIFF_ID - видається менеджерами https://trinity-tv.net
 $api = new TrinityTV('YOUR_PARTNER_ID', 'YOUR_SALT_CODE');
 
@@ -25,6 +26,8 @@ $api->suspend(123);
 $api->resume(123);
 //Змінити дані про абонента
 $api->updateUser(123, 'Ім`я', 'Прізвище', 'По батькові', 'Адреса');
+$api->updateUser(123, address: 'Адреса');
+$api->updateUser(123, last_name: 'Прізвище');
 //Список всіх підписок
 $users = $api->usersList();
 //Отримати звіт за останній місяць
