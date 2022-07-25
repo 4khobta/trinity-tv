@@ -50,6 +50,6 @@ $link = $api->getLink(123, 1);// 1 - по дефолту
 $type = $api->getDeviceType(8);// Поверне DT_MAG250_Micro
 
 if ($api->errors) {
-    print_r($error); // Масив з помилками
+    print_r($api->errors); // Масив з помилками
 }
 ```
