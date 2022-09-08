@@ -23,7 +23,7 @@ class TrinityTV
         return $out;
     }
 
-    private function execute(string $method, array $params = []): array|null
+    private function execute(string $method, array $params = []): ?array
     {
         $url = $this->api_url . $method;
         $params = array_merge([
@@ -54,7 +54,7 @@ class TrinityTV
         return null;
     }
 
-    public function getUser(int $id): array|null
+    public function getUser(int $id): ?array
     {
         /*
          *  subscrstatusid: 0 - active, 768 - blocked
@@ -64,14 +64,14 @@ class TrinityTV
         ]);
     }
 
-    public function getDevices(int $id): array|null
+    public function getDevices(int $id): ?array
     {
         return $this->execute('devicelist', [
             'localid' => $id
         ]);
     }
 
-    public function create(int $id, int $tariff_id): array|null
+    public function create(int $id, int $tariff_id): ?array
     {
         return $this->execute('create', [
             'localid' => $id,
@@ -79,7 +79,7 @@ class TrinityTV
         ]);
     }
 
-    public function addDeviceByMac(int $id, string $mac = null, string $note = null, string $uuid = null): array|null
+    public function addDeviceByMac(int $id, string $mac = null, string $note = null, string $uuid = null): ?array
     {
         return $this->execute($note ? 'autorizedevice_note' : 'autorizedevice', [
             'localid' => $id,
@@ -89,7 +89,7 @@ class TrinityTV
         ]);
     }
 
-    public function addDeviceByCode(int $id, int|string $code, string $note = null): array|null
+    public function addDeviceByCode(int $id, int|string $code, string $note = null): ?array
     {
         return $this->execute('autorizebycode', [
             'localid' => $id,
@@ -98,7 +98,7 @@ class TrinityTV
         ]);
     }
 
-    public function deleteDevice(int $id, string $mac = null, string $uuid = null): array|null
+    public function deleteDevice(int $id, string $mac = null, string $uuid = null): ?array
     {
         return $this->execute('deletedevice', [
             'localid' => $id,
@@ -107,7 +107,7 @@ class TrinityTV
         ]);
     }
 
-    public function updateDeviceNote(int $device_id, string $note): array|null
+    public function updateDeviceNote(int $device_id, string $note): ?array
     {
         return $this->execute('updatenotebydevice', [
             'deviceid' => $device_id,
@@ -115,17 +115,17 @@ class TrinityTV
         ]);
     }
 
-    public function suspend(int $id): array|null
+    public function suspend(int $id): ?array
     {
         return $this->subscribe($id, 'suspend');
     }
 
-    public function resume(int $id): array|null
+    public function resume(int $id): ?array
     {
         return $this->subscribe($id, 'resume');
     }
 
-    private function subscribe(int $id, string $operation): array|null
+    private function subscribe(int $id, string $operation): ?array
     {
         return $this->execute('subscription', [
             'localid' => $id,
@@ -133,12 +133,12 @@ class TrinityTV
         ]);
     }
 
-    public function usersList(): array|null
+    public function usersList(): ?array
     {
         return $this->execute('subscriberlist');
     }
 
-    public function updateUser(int $id, string $first_name = null, string $last_name = null, string $middle_name = null, string $address = null): array|null
+    public function updateUser(int $id, string $first_name = null, string $last_name = null, string $middle_name = null, string $address = null): ?array
     {
         return $this->execute('updateuser', [
             'localid' => $id,
@@ -149,17 +149,17 @@ class TrinityTV
         ]);
     }
 
-    public function getReport(): array|null
+    public function getReport(): ?array
     {
         return $this->execute('listreportupdated');
     }
 
-    public function getDeviceList(): array|null
+    public function getDeviceList(): ?array
     {
         return $this->execute('fulldevicelist');
     }
 
-    public function changeContract(int|string $id, int|string $new_id): array|null
+    public function changeContract(int|string $id, int|string $new_id): ?array
     {
         return $this->execute('newcontract', [
             'localid' => $id,
@@ -167,24 +167,24 @@ class TrinityTV
         ]);
     }
 
-    public function getLastSessions(): array|null
+    public function getLastSessions(): ?array
     {
         return $this->execute('getsessionsdate');
     }
 
-    public function getPlaylist(int $id): array|null
+    public function getPlaylist(int $id): ?array
     {
         return $this->execute('getplaylist', [
             'localid' => $id
         ]);
     }
 
-    public function deletePlaylist(int $id, string $playlist): array|null // same deleteDevice
+    public function deletePlaylist(int $id, string $playlist): ?array // same deleteDevice
     {
         return $this->deleteDevice($id, uuid: $playlist);
     }
 
-    public function getLink(int $id, int $site_id = 1): array|null //Autorize in site site_id: 1 - trinity, 2 - sweet.tv
+    public function getLink(int $id, int $site_id = 1): ?array //Autorize in site site_id: 1 - trinity, 2 - sweet.tv
     {
         return $this->execute('siteaccesslink', [
             'localid' => $id,
